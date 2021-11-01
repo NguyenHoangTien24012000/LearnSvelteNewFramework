@@ -10,5 +10,6 @@
         padding: 40px 0px;
         margin: 20px 0;
         position: relative;
+        text-align: center;
     }
 </style>
