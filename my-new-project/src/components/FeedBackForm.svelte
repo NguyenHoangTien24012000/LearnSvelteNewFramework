@@ -2,11 +2,14 @@
   import Button from "./Button.svelte";
   import Card from "./Card.svelte";
   import RatingSelect from './RatingSelect.svelte';
+  import {createEventDispatcher} from 'svelte'
   let text = "";
   let btnDisabled = true;
   let min = 10;
   let rating = 10;
   let message;
+  const dispatch = createEventDispatcher();
+
   const handleInput =() =>{
     if(text.trim().length <= min){
         message = `Text must be at least ${min} characters`
@@ -16,14 +19,29 @@
         btnDisabled = false;
     }
   }
+  const handleSubmit = () =>{
+    if(text.trim().length >= min){
+      const newFeedback = {
+        id: Date.now(),
+        text, 
+        rating: +rating
+      }
+      dispatch('add-feedback', newFeedback);
+      text = '';
+    }
+  }
+  const handleRatingSelect = (e) =>{
+    rating = e.detail
+    // console.log(rating)
+  }
 </script>
 
 <Card>
   <header>
     <h2>How would you rate your service with us?</h2>
   </header>
-  <RatingSelect />
-  <form>
+  <RatingSelect on:rating-select={handleRatingSelect} />
+  <form on:submit|preventDefault = {handleSubmit}>
     <div class="input-group">
       <input on:input={handleInput}
         type="text"

@@ -2,6 +2,7 @@
 	import FeedbackList from './components/FeedbackList.svelte';
 	import FeedBackStats from './components/FeedbackStats.svelte';
 	import FeedBackForm from './components/FeedBackForm.svelte';
+	import Day1 from './LearnSvelte/App1.svelte';
 	let feedback = [
 		{
 			id : 1,
@@ -28,12 +29,17 @@
 		const itemId = e.detail;
 		feedback = feedback.filter(item => item.id != itemId);
 	}
+	const addFeedback = (e) =>{
+		// console.log(e)
+		feedback = [e.detail,...feedback]
+	}
 </script>
 
 <main class="container">
-	<FeedBackForm />
+	<!-- <FeedBackForm on:add-feedback={addFeedback} />
 	<FeedBackStats {count} {average} />
-  <FeedbackList {feedback} on:delete-feedback={deleteFeedback} />
+  <FeedbackList {feedback} on:delete-feedback={deleteFeedback} /> -->
+		<Day1 />
 
 </main>
 
